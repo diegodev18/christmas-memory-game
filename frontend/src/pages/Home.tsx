@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
+import Card from "@/components/Card";
 
 function Home() {
   const [clickedCards, setClickedCards] = useState<number[]>([]);
@@ -97,58 +98,17 @@ function Home() {
         </main>
       </div>
       <div className="flex justify-center flex-wrap max-w-[800px] mx-auto pt-5">
-        {shuffledCards.map((card, idx) => {
-          const isMatched = matchedCards.includes(idx);
-          const isFlipped = clickedCards.includes(idx);
-
-          return (
-            <div
-              key={idx}
-              className={`m-2 perspective-1000 ${
-                isMatched ? "opacity-0 scale-0" : ""
-              } transition-all duration-300 ease-in-out`}
-              style={{ perspective: "1000px" }}
-            >
-              <button
-                className={`relative w-[180px] h-56 transition-transform duration-500 preserve-3d ${
-                  isFlipped ? "rotate-y-180" : ""
-                }`}
-                style={{
-                  transformStyle: "preserve-3d",
-                  transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
-                }}
-                onClick={() => handleCardClick(idx)}
-                disabled={isMatched}
-              >
-                {/* Parte trasera de la carta */}
-                <div
-                  className="absolute inset-0 backface-hidden rounded-lg ring-1 ring-neutral-600 overflow-hidden"
-                  style={{ backfaceVisibility: "hidden" }}
-                >
-                  <img
-                    src={randomBgCard}
-                    alt="Card back"
-                    className="w-full h-full object-cover object-center"
-                  />
-                </div>
-                {/* Parte frontal de la carta */}
-                <div
-                  className="absolute inset-0 backface-hidden rounded-lg ring-1 ring-neutral-600 overflow-hidden"
-                  style={{
-                    backfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
-                  }}
-                >
-                  <img
-                    src={card.image}
-                    alt={card.name}
-                    className="w-full h-full object-cover object-center"
-                  />
-                </div>
-              </button>
-            </div>
-          );
-        })}
+        {shuffledCards.map((card, idx) => (
+          <Card
+            key={idx}
+            card={card}
+            idx={idx}
+            isFlipped={clickedCards.includes(idx)}
+            isMatched={matchedCards.includes(idx)}
+            backImage={randomBgCard}
+            onClick={handleCardClick}
+          />
+        ))}
       </div>
     </>
   );
