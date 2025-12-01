@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Background from "./components/Background";
 
 function App() {
+  document.documentElement.classList.add("dark");
   return (
     <>
       <BrowserRouter>
