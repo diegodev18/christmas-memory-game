@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 function Home() {
   return (
     <>
       <div className="max-w-[800px] mx-auto pt-5">
-        <header className="flex justify-end gap-x-4">
+        <header className="flex justify-end h-9 gap-x-4">
           <Button variant={"secondary"}>Start Game</Button>
+          <Separator orientation="vertical" />
           <Button variant={"outline"}>Log in</Button>
         </header>
         <main className="mt-10">
