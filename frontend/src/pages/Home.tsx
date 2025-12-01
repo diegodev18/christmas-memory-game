@@ -100,20 +100,51 @@ function Home() {
           const isFlipped = clickedCards.includes(idx);
 
           return (
-            <button
+            <div
               key={idx}
-              className={`m-2 rounded-lg ring-1 ring-neutral-600 overflow-hidden hover:rotate-3 transition-all duration-150 ease-in-out ${
-                isMatched ? "opacity-0 scale-0 pointer-events-none" : ""
-              }`}
-              onClick={() => handleCardClick(card.id, idx)}
-              disabled={isMatched}
+              className={`m-2 perspective-1000 ${
+                isMatched ? "opacity-0 scale-0" : ""
+              } transition-all duration-300 ease-in-out`}
+              style={{ perspective: "1000px" }}
             >
-              <img
-                src={isFlipped ? card.image : randomBgCard}
-                alt={card.name}
-                className="h-56 aspect-10/13 object-cover object-center"
-              />
-            </button>
+              <button
+                className={`relative w-[180px] h-56 transition-transform duration-500 preserve-3d ${
+                  isFlipped ? "rotate-y-180" : ""
+                }`}
+                style={{
+                  transformStyle: "preserve-3d",
+                  transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                }}
+                onClick={() => handleCardClick(card.id, idx)}
+                disabled={isMatched}
+              >
+                {/* Parte trasera de la carta */}
+                <div
+                  className="absolute inset-0 backface-hidden rounded-lg ring-1 ring-neutral-600 overflow-hidden"
+                  style={{ backfaceVisibility: "hidden" }}
+                >
+                  <img
+                    src={randomBgCard}
+                    alt="Card back"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+                {/* Parte frontal de la carta */}
+                <div
+                  className="absolute inset-0 backface-hidden rounded-lg ring-1 ring-neutral-600 overflow-hidden"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
+                  }}
+                >
+                  <img
+                    src={card.image}
+                    alt={card.name}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              </button>
+            </div>
           );
         })}
       </div>
