@@ -8,6 +8,7 @@ interface CardProps {
   idx: number;
   isFlipped: boolean;
   isMatched: boolean;
+  isStarted: boolean;
   backImage: string;
   onClick: (idx: number) => void;
 }
@@ -17,6 +18,7 @@ export default function Card({
   idx,
   isFlipped,
   isMatched,
+  isStarted,
   backImage,
   onClick,
 }: CardProps) {
@@ -25,7 +27,11 @@ export default function Card({
       className={`m-2 perspective-1000 ${
         isMatched ? "opacity-0 scale-0" : ""
       } transition-all duration-300 ease-in-out hover:rotate-[4deg] hover:scale-[1.01]`}
-      style={{ perspective: "1000px" }}
+      style={{
+        perspective: "1000px",
+        position: isStarted ? "static" : "absolute",
+        rotate: isStarted ? "0deg" : `${idx * 2}deg`,
+      }}
     >
       <button
         className={`relative w-[180px] h-56 transition-transform duration-500 preserve-3d ${

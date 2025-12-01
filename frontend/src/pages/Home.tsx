@@ -42,8 +42,11 @@ function Home() {
   const [randomBgCard] = useState(
     () => bgCards[Math.floor(Math.random() * bgCards.length)]
   );
+  const [isStarted, setIsStarted] = useState(false);
 
   const handleCardClick = (idx: number) => {
+    if (!isStarted) setIsStarted(true);
+
     // No permitir clic en cartas ya emparejadas
     if (matchedCards.includes(idx)) return;
 
@@ -83,7 +86,10 @@ function Home() {
 
   return (
     <>
-      <div className="max-w-[800px] mx-auto pt-5">
+      <div
+        className="max-w-[800px] mx-auto pt-5"
+        style={isStarted ? { position: "relative" } : {}}
+      >
         <header className="flex justify-end h-9 gap-x-4">
           <Button variant={"secondary"}>Start Game</Button>
           <Separator orientation="vertical" />
@@ -105,6 +111,7 @@ function Home() {
             idx={idx}
             isFlipped={clickedCards.includes(idx)}
             isMatched={matchedCards.includes(idx)}
+            isStarted={isStarted}
             backImage={randomBgCard}
             onClick={handleCardClick}
           />
