@@ -31,6 +31,7 @@ export default function Card({
         perspective: "1000px",
         position: isStarted ? "static" : "absolute",
         rotate: isStarted ? "0deg" : `${idx * 2}deg`,
+        marginTop: isStarted ? "0px" : `${idx * 4 + 20}px`,
       }}
     >
       <button
