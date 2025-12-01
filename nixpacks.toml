@@ -1,0 +1,16 @@
+[phases.setup]
+nixPkgs = ["nodejs_23", "pnpm"]
+env = { NODE_ENV = "production" }
+
+[phases.install]
+cmds = ["pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["pnpm run build"]
+
+[start]
+cmd = "pnpm run start"
+
+[variables]
+NIXPACKS_PATH = "/app"
+NODE_ENV = "production"
