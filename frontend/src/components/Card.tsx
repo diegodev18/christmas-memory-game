@@ -24,7 +24,7 @@ export default function Card({
     <div
       className={`m-2 perspective-1000 ${
         isMatched ? "opacity-0 scale-0" : ""
-      } transition-all duration-300 ease-in-out`}
+      } transition-all duration-300 ease-in-out hover:rotate-[4deg] hover:scale-[1.01]`}
       style={{ perspective: "1000px" }}
     >
       <button
