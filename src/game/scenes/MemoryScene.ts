@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 interface Card {
   sprite: Phaser.GameObjects.Graphics;
   icon: Phaser.GameObjects.Text;
+  pattern: Phaser.GameObjects.Text;
   symbol: string;
   isFlipped: boolean;
   isMatched: boolean;
@@ -84,8 +85,8 @@ export default class MemoryScene extends Phaser.Scene {
   private createCards(): void {
     const { width, height } = this.scale;
     
-    // Create pairs of symbols
-    const gameSymbols = [...this.symbols, ...this.symbols];
+    // Create pairs of symbols for the memory game (each symbol appears twice)
+    const gameSymbols = this.symbols.flatMap(symbol => [symbol, symbol]);
     
     // Shuffle the symbols
     Phaser.Utils.Array.Shuffle(gameSymbols);
@@ -137,6 +138,7 @@ export default class MemoryScene extends Phaser.Scene {
     const card: Card = {
       sprite: cardBack,
       icon: icon,
+      pattern: pattern,
       symbol: symbol,
       isFlipped: false,
       isMatched: false,
@@ -149,7 +151,7 @@ export default class MemoryScene extends Phaser.Scene {
       Phaser.Geom.Rectangle.Contains
     );
 
-    cardBack.on('pointerdown', () => this.flipCard(card, pattern));
+    cardBack.on('pointerdown', () => this.flipCard(card));
     cardBack.on('pointerover', () => {
       if (!card.isFlipped && !card.isMatched && this.canFlip) {
         cardBack.setAlpha(0.8);
@@ -162,14 +164,14 @@ export default class MemoryScene extends Phaser.Scene {
     this.cards.push(card);
   }
 
-  private flipCard(card: Card, pattern: Phaser.GameObjects.Text): void {
+  private flipCard(card: Card): void {
     if (!this.canFlip || card.isFlipped || card.isMatched) {
       return;
     }
 
     // Flip animation
     this.tweens.add({
-      targets: [card.sprite, pattern],
+      targets: [card.sprite, card.pattern],
       scaleX: 0,
       duration: 150,
       onComplete: () => {
@@ -181,7 +183,7 @@ export default class MemoryScene extends Phaser.Scene {
         card.sprite.lineStyle(3, 0xc41e3a, 1);
         card.sprite.strokeRoundedRect(bounds.x, bounds.y, bounds.width, bounds.height, 10);
         
-        pattern.setVisible(false);
+        card.pattern.setVisible(false);
         card.icon.setVisible(true);
 
         this.tweens.add({
@@ -256,14 +258,9 @@ export default class MemoryScene extends Phaser.Scene {
         
         card.icon.setVisible(false);
         
-        // Re-add the gift pattern
-        const pattern = this.add.text(
-          bounds.x + bounds.width / 2,
-          bounds.y + bounds.height / 2,
-          '🎁',
-          { fontSize: '30px' }
-        );
-        pattern.setOrigin(0.5);
+        // Re-show the cached pattern instead of creating new one
+        card.pattern.setVisible(true);
+        card.pattern.setScale(1);
 
         card.isFlipped = false;
 
