@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
+import { toast } from "sonner";
 import Card from "@/components/Card";
 
 function Home() {
@@ -43,6 +44,7 @@ function Home() {
     () => bgCards[Math.floor(Math.random() * bgCards.length)]
   );
   const [isStarted, setIsStarted] = useState(false);
+  const [collections, setCollections] = useState<number[]>([]);
 
   const handleCardClick = (idx: number) => {
     if (!isStarted) setIsStarted(true);
@@ -70,6 +72,11 @@ function Home() {
 
       // Si las cartas coinciden por ID
       if (firstCard.id === secondCard.id) {
+        if (!collections.includes(firstCard.id)) {
+          setCollections([...collections, firstCard.id]);
+          toast(`You found a pair of ${firstCard.name} cards! 🎉`);
+        }
+
         // Esperar un momento antes de ocultar las cartas
         setTimeout(() => {
           setMatchedCards([...matchedCards, firstIdx, secondIdx]);
