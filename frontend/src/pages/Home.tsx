@@ -5,12 +5,14 @@ import { useState } from "react";
 function Home() {
   const [clickedCards, setClickedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
-  const [bgCards, setBgCards] = useState<string[]>([
+  const [bgCards] = useState<string[]>([
     "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg",
     "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg",
     "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg",
   ]);
-  const [cards, setCards] = useState<any[]>([
+  const [cards] = useState<
+    { id: number; name: string; image: string; color: string }[]
+  >([
     {
       id: 1,
       name: "Reno",
@@ -33,14 +35,14 @@ function Home() {
       color: "red",
     },
   ]);
-  const [shuffledCards, setShuffledCards] = useState<typeof cards>(() =>
+  const [shuffledCards] = useState<typeof cards>(() =>
     [...cards, ...cards].sort(() => Math.random() - 0.5)
   );
   const [randomBgCard] = useState(
     () => bgCards[Math.floor(Math.random() * bgCards.length)]
   );
 
-  const handleCardClick = (id: number, idx: number) => {
+  const handleCardClick = (idx: number) => {
     // No permitir clic en cartas ya emparejadas
     if (matchedCards.includes(idx)) return;
 
@@ -115,7 +117,7 @@ function Home() {
                   transformStyle: "preserve-3d",
                   transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
                 }}
-                onClick={() => handleCardClick(card.id, idx)}
+                onClick={() => handleCardClick(idx)}
                 disabled={isMatched}
               >
                 {/* Parte trasera de la carta */}
