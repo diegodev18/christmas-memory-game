@@ -28,3 +28,6 @@ dist-ssr
 
 # TypeScript cache
 *.tsbuildinfo
+
+# Prisma
+backend/src/generated/prisma

@@ -1,0 +1,10 @@
+import { PrismaPg } from "@prisma/adapter-pg";
+
+import { DATABASE_URL } from "@/config";
+import { PrismaClient } from "@/generated/prisma/client";
+
+const adapter = new PrismaPg({ url: DATABASE_URL });
+
+export const prisma = new PrismaClient({ adapter });
+
+export default prisma;
