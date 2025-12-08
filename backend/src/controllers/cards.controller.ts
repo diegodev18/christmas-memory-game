@@ -16,7 +16,16 @@ export const getRandomCards = async (req: Request, res: Response) => {
     },
   });
 
-  const randomCards = cards.sort(() => 0.5 - Math.random()).slice(0, limit);
+  const randomCards = cards
+    .sort(() => 0.5 - Math.random())
+    .slice(0, limit)
+    .map((card) => ({
+      id: card.id,
+      image: {
+        url: card.url,
+      },
+      name: card.name,
+    }));
 
   return res
     .status(200)
