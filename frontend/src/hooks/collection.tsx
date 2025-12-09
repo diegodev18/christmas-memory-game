@@ -35,11 +35,32 @@ export const useCollection = () => {
     setCollection(items);
   };
 
+  const addCollectionItem = async (itemId: number) => {
+    const response = await fetch(
+      import.meta.env.VITE_API_URL + "/collection/new",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ itemId }),
+      }
+    );
+
+    if (!response.ok) {
+      console.error("Failed to add item to collection");
+      return;
+    }
+
+    fetchCollection();
+  };
+
   useEffect(() => {
     (async () => {
       fetchCollection();
     })();
   }, []);
 
-  return { fetchCollection, collection };
+  return { fetchCollection, collection, addCollectionItem };
 };
