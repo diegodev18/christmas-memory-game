@@ -17,6 +17,12 @@ export const useCollection = () => {
       }
     );
 
+    if (!response.ok) {
+      console.error("Failed to fetch collection");
+      setCollection([]);
+      return;
+    }
+
     const data = await response.json();
     const items = data.items.map(
       (item: { card: { id: number; name: string; url: string } }) => ({
