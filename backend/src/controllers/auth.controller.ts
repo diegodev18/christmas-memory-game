@@ -25,6 +25,8 @@ export const getSession = (req: SessionRequest, res: Response) => {
     user_name: user.user_name,
   };
 
+  console.info(`Session retrieved for user ${user.user_name}.`);
+
   return res.status(200).json({ user: sanitized });
 };
 

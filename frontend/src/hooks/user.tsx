@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface User {
   user_name: string;
@@ -104,6 +104,10 @@ export const useUser = () => {
     setUser({ user_name: data.user_name });
     return true;
   };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return {
     fetchUser,
