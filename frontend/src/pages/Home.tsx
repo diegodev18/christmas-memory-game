@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { toast } from "sonner";
 import Card from "@/components/Card";
+import { useCollection } from "@/hooks/collection";
 
 function Home() {
   const [clickedCards, setClickedCards] = useState<number[]>([]);
@@ -45,6 +46,9 @@ function Home() {
   );
   const [isStarted, setIsStarted] = useState(false);
   const [collections, setCollections] = useState<number[]>([]);
+  const { collection, updateCollectionByUser } = useCollection();
+
+  console.log(collection);
 
   const handleCardClick = (idx: number) => {
     if (!isStarted) setIsStarted(true);
