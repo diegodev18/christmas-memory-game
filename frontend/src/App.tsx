@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles/index.css";
 import Home from "./pages/Home";
+import Auth from "./pages/Auth";
 import Background from "./components/Background";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -11,7 +12,9 @@ function App() {
       <Toaster position="top-right" />
       <BrowserRouter>
         <Routes>
+          <Route path="/auth" element={<Auth />} />
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<Home />} />
         </Routes>
       </BrowserRouter>
       <Background />

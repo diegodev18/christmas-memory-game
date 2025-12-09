@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Card from "@/components/Card";
 import { useCollection } from "@/hooks/collection";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [clickedCards, setClickedCards] = useState<number[]>([]);
@@ -47,6 +48,7 @@ function Home() {
   const [isStarted, setIsStarted] = useState(false);
   const [collections, setCollections] = useState<number[]>([]);
   const { collection, fetchCollection } = useCollection();
+  const navigate = useNavigate();
 
   console.log("User collection from hook:", collection);
 
@@ -102,9 +104,13 @@ function Home() {
         style={isStarted ? { position: "relative" } : {}}
       >
         <header className="flex justify-end h-9 gap-x-4">
-          <Button variant={"secondary"}>Start Game</Button>
+          <Button onClick={() => navigate("/game")} variant={"secondary"}>
+            Start Game
+          </Button>
           <Separator orientation="vertical" />
-          <Button variant={"outline"}>Log in</Button>
+          <Button onClick={() => navigate("/auth")} variant={"outline"}>
+            Log in
+          </Button>
         </header>
         <main className="mt-10">
           <h1 className="text-center text-4xl font-medium">Memoristmas 🎄</h1>
