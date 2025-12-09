@@ -110,9 +110,7 @@ export const useUser = () => {
     return true;
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  useEffect(() => (() => void fetchUser())(), []);
 
   return {
     fetchUser,
