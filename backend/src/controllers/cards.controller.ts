@@ -45,7 +45,8 @@ export const getCardById = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Card not found" });
   }
 
-  return res
-    .status(200)
-    .json({ data: card, message: "Card data retrieved successfully" });
+  return res.status(200).json({
+    data: { id: card.id, image_url: card.url, name: card.name },
+    message: "Card data retrieved successfully",
+  });
 };
