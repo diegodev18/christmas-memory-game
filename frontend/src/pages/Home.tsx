@@ -46,9 +46,9 @@ function Home() {
   );
   const [isStarted, setIsStarted] = useState(false);
   const [collections, setCollections] = useState<number[]>([]);
-  const { collection, updateCollectionByUser } = useCollection();
+  const { collection, fetchCollection } = useCollection();
 
-  console.log(collection);
+  console.log("User collection from hook:", collection);
 
   const handleCardClick = (idx: number) => {
     if (!isStarted) setIsStarted(true);

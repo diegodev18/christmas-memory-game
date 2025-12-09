@@ -6,7 +6,7 @@ export const useCollection = () => {
   >([]);
 
   const fetchCollection = async () => {
-    const data = await fetch(
+    const response = await fetch(
       import.meta.env.VITE_API_URL + "/collection/items",
       {
         method: "GET",
@@ -16,7 +16,9 @@ export const useCollection = () => {
         },
       }
     );
-    const items = (await data.json()).items.map(
+
+    const data = await response.json();
+    const items = data.items.map(
       (item: { card: { id: number; name: string; url: string } }) => ({
         id: item.card.id,
         name: item.card.name,
