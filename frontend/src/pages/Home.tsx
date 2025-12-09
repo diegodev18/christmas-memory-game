@@ -47,7 +47,7 @@ function Home() {
   );
   const [isStarted, setIsStarted] = useState(false);
   const [collections, setCollections] = useState<number[]>([]);
-  const { collection, fetchCollection } = useCollection();
+  const { collection } = useCollection();
   const navigate = useNavigate();
 
   console.log("User collection from hook:", collection);
