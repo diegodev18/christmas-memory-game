@@ -13,6 +13,7 @@ export const useUser = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [username, setUsername] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const fetchUser = async () => {
     const response = await fetch(
@@ -48,13 +49,15 @@ export const useUser = () => {
     });
 
     if (!response.ok) {
-      console.error("Login failed");
+      const data = await response.json();
+      setErrorMessage(data.message || "Login failed");
       setUser(null);
       return false;
     }
 
     const data = (await response.json()) as User;
     setUser({ user_name: data.user_name });
+    setErrorMessage("");
     return true;
   };
 
@@ -71,11 +74,12 @@ export const useUser = () => {
     );
 
     if (!response.ok) {
-      console.error("Logout failed");
+      setErrorMessage("Logout failed");
       return false;
     }
 
     setUser(null);
+    setErrorMessage("");
     return true;
   };
 
@@ -97,11 +101,13 @@ export const useUser = () => {
     if (!response.ok) {
       console.error("Registration failed");
       setUser(null);
+      setErrorMessage("Registration failed");
       return false;
     }
 
     const data = (await response.json()) as User;
     setUser({ user_name: data.user_name });
+    setErrorMessage("");
     return true;
   };
 
@@ -118,5 +124,6 @@ export const useUser = () => {
     setUsername,
     setPassword,
     setEmail,
+    errorMessage,
   };
 };

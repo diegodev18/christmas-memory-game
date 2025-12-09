@@ -6,8 +6,16 @@ import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const [action, setAction] = useState<"login" | "register">("login");
-  const { user, register, login, logout, setEmail, setPassword, setUsername } =
-    useUser();
+  const {
+    user,
+    register,
+    login,
+    logout,
+    setEmail,
+    setPassword,
+    setUsername,
+    errorMessage,
+  } = useUser();
   const navigate = useNavigate();
 
   if (user) {
@@ -73,6 +81,9 @@ export default function Auth() {
               ? "Don't have an account? Register"
               : "Already have an account? Login"}
           </Button>
+          {errorMessage ? (
+            <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+          ) : null}
         </div>
       </div>
     </>
