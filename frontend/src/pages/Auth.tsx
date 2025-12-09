@@ -2,18 +2,29 @@ import { useState } from "react";
 import { useUser } from "@/hooks/user";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const [action, setAction] = useState<"login" | "register">("login");
-  const { user, register, login, setEmail, setPassword, setUsername } =
+  const { user, register, login, logout, setEmail, setPassword, setUsername } =
     useUser();
+  const navigate = useNavigate();
 
   if (user) {
     return (
-      <div>
-        <h1>Welcome, {user.user_name}!</h1>
-        <p>You are logged in.</p>
-        <Button>Logout</Button>
+      <div className="flex flex-col gap-y-4 items-center justify-center h-screen">
+        <div className="text-lg font-mono">
+          <h1>Welcome, {user.user_name}!</h1>
+          <p>You are logged in.</p>
+        </div>
+        <div className="space-x-2">
+          <Button variant={"secondary"} onClick={() => navigate("/game")}>
+            Play now!
+          </Button>
+          <Button variant={"destructive"} onClick={logout}>
+            Logout
+          </Button>
+        </div>
       </div>
     );
   }
