@@ -55,8 +55,7 @@ export const useUser = () => {
       return false;
     }
 
-    const data = (await response.json()) as User;
-    setUser({ user_name: data.user_name });
+    setUser({ user_name: username });
     setErrorMessage("");
     return true;
   };

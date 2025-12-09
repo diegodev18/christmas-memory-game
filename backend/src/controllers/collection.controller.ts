@@ -42,6 +42,27 @@ export const newCollectionItem = async (req: SessionRequest, res: Response) => {
 
   const { cardId } = parseResult.data;
 
+  const cardFound = await prisma.cards.findUnique({
+    where: {
+      id: cardId,
+    },
+  });
+
+  if (!cardFound) {
+    return res.status(404).json({ message: "Card not found" });
+  }
+
+  const existingCollectionItem = await prisma.collections.findFirst({
+    where: {
+      card_id: cardId,
+      user_id: req.session.user.id,
+    },
+  });
+
+  if (existingCollectionItem) {
+    return res.status(409).json({ message: "Card already in collection" });
+  }
+
   await prisma.collections.create({
     data: {
       card_id: cardId,
