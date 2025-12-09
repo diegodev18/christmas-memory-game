@@ -1,8 +1,13 @@
 import { Router } from "express";
 
-import { newCollectionItem } from "@/controllers/collection.controller";
+import {
+  getCollectionItems,
+  newCollectionItem,
+} from "@/controllers/collection.controller";
 
 const router = Router();
 
+router.get("/items", getCollectionItems);
 router.post("/new", newCollectionItem);
+
 export default router;

@@ -5,6 +5,31 @@ import type { SessionRequest } from "@/types";
 import prisma from "@/lib/prisma";
 import { NewCollectionItemBodySchema } from "@/schemas/collection.schema";
 
+export const getCollectionItems = async (
+  req: SessionRequest,
+  res: Response
+) => {
+  if (!req.session?.user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const collectionItems = await prisma.collections.findMany({
+    include: {
+      cards: true,
+    },
+    where: {
+      user_id: req.session.user.id,
+    },
+  });
+
+  return res.status(200).json({
+    items: collectionItems.map((item) => ({
+      card: item.cards,
+      id: item.id,
+    })),
+  });
+};
+
 export const newCollectionItem = async (req: SessionRequest, res: Response) => {
   if (!req.session?.user) {
     return res.status(401).json({ message: "Unauthorized" });
