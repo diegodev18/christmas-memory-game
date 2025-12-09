@@ -1,7 +1,9 @@
 import { config } from "dotenv";
 import { defineConfig, env } from "prisma/config";
 
-config({ path: ".env" });
+if (process.env.NODE_ENV !== "production") {
+  config({ override: true, path: ".env", quiet: true });
+}
 
 export default defineConfig({
   datasource: {
