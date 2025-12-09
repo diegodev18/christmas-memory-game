@@ -21,13 +21,31 @@ export const getRandomCards = async (req: Request, res: Response) => {
     .slice(0, limit)
     .map((card) => ({
       id: card.id,
-      image: {
-        url: card.url,
-      },
-      name: card.name,
     }));
+
+  return res.status(200).json({
+    data: randomCards,
+    message: "Random cards retrieved successfully",
+  });
+};
+
+export const getCardById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const numId = isNaN(Number(id)) ? -1 : Number(id);
+  if (numId === -1) {
+    return res.status(400).json({ message: "Invalid card Id" });
+  }
+
+  const card = await prisma.cards.findUnique({
+    where: { id: numId },
+  });
+
+  if (!card) {
+    return res.status(404).json({ message: "Card not found" });
+  }
 
   return res
     .status(200)
-    .json({ data: randomCards, message: "Get random cards endpoint" });
+    .json({ data: card, message: "Card data retrieved successfully" });
 };
