@@ -1,0 +1,30 @@
+import type { Response } from "express";
+
+import type { SessionRequest } from "@/types";
+
+import prisma from "@/lib/prisma";
+import { NewCollectionItemBodySchema } from "@/schemas/collection.schema";
+
+export const newCollectionItem = async (req: SessionRequest, res: Response) => {
+  if (!req.session?.user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const parseResult = NewCollectionItemBodySchema.safeParse(req.body);
+  if (!parseResult.success) {
+    return res.status(400).json({ message: "Invalid request body" });
+  }
+
+  const { cardId } = parseResult.data;
+
+  await prisma.collections.create({
+    data: {
+      card_id: cardId,
+      user_id: req.session.user.id,
+    },
+  });
+
+  return res.status(201).json({
+    message: "New collection item created successfully",
+  });
+};

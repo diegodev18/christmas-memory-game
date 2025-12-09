@@ -8,16 +8,27 @@ datasource db {
 }
 
 model cards {
-  id         Int       @id @default(autoincrement())
-  name       String
-  url        String
-  created_at DateTime? @default(now()) @db.Timestamp(6)
+  id          Int           @id @default(autoincrement())
+  name        String
+  url         String
+  created_at  DateTime?     @default(now()) @db.Timestamp(6)
+  collections collections[]
 }
 
 model users {
+  id          Int           @id @default(autoincrement())
+  user_name   String        @unique
+  email       String        @unique
+  password    String
+  created_at  DateTime?     @default(now()) @db.Timestamp(6)
+  collections collections[]
+}
+
+model collections {
   id         Int       @id @default(autoincrement())
-  user_name  String    @unique
-  email      String    @unique
-  password   String
+  card_id    Int
+  user_id    Int
   created_at DateTime? @default(now()) @db.Timestamp(6)
+  cards      cards     @relation(fields: [card_id], references: [id], onDelete: Cascade)
+  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
