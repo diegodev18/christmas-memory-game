@@ -3,6 +3,7 @@ import { useUser } from "@/hooks/user";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
 
 export default function Auth() {
   const [action, setAction] = useState<"login" | "register">("login");
@@ -20,20 +21,23 @@ export default function Auth() {
 
   if (user) {
     return (
-      <div className="flex flex-col gap-y-4 items-center justify-center h-screen">
-        <div className="text-lg font-mono">
-          <h1>Welcome, {user.user_name}!</h1>
-          <p>You are logged in.</p>
+      <>
+        <Header />
+        <div className="flex flex-col gap-y-4 items-center justify-center h-screen">
+          <div className="text-lg font-mono">
+            <h1>Welcome, {user.user_name}!</h1>
+            <p>You are logged in.</p>
+          </div>
+          <div className="space-x-2">
+            <Button variant={"secondary"} onClick={() => navigate("/game")}>
+              Play now!
+            </Button>
+            <Button variant={"destructive"} onClick={logout}>
+              Logout
+            </Button>
+          </div>
         </div>
-        <div className="space-x-2">
-          <Button variant={"secondary"} onClick={() => navigate("/game")}>
-            Play now!
-          </Button>
-          <Button variant={"destructive"} onClick={logout}>
-            Logout
-          </Button>
-        </div>
-      </div>
+      </>
     );
   }
 
@@ -51,6 +55,7 @@ export default function Auth() {
 
   return (
     <>
+      <Header />
       <div className="flex items-center justify-center h-screen">
         <div className="flex flex-col gap-y-2 w-100">
           <h2 className="text-xl bg-yellow-300/40 px-1.5 mx-auto font-mono">

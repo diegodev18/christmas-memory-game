@@ -1,29 +1,19 @@
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { useCollection } from "@/hooks/collection";
-import { useNavigate } from "react-router-dom";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Header from "@/components/Header";
 
 function Collection() {
   const { collection } = useCollection();
-  const navigate = useNavigate();
 
   return (
     <>
       <div className="max-w-[800px] mx-auto pt-5">
-        <header className="flex justify-end h-9 gap-x-4">
-          <Button onClick={() => navigate("/game")} variant={"secondary"}>
-            Start Game
-          </Button>
-          <Separator orientation="vertical" />
-          <Button onClick={() => navigate("/auth")} variant={"outline"}>
-            Log in
-          </Button>
-        </header>
+        <Header />
         <main className="mt-10">
           <h1 className="text-center text-4xl font-medium">Collection 🎄</h1>
           <p className="text-center max-w-[450px] mx-auto mt-2">

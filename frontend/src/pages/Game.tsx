@@ -1,11 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { toast } from "sonner";
 import Card from "@/components/Card";
 import { useCollection } from "@/hooks/collection";
-import { useNavigate } from "react-router-dom";
 import { useGame } from "@/hooks/game";
+import Header from "@/components/Header";
 
 function Game() {
   const { cards } = useGame(10);
@@ -16,7 +14,6 @@ function Game() {
   const { collection, addCollectionItem } = useCollection();
   const bgCard =
     "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg";
-  const navigate = useNavigate();
 
   const handleCardClick = (idx: number) => {
     if (!isStarted) setIsStarted(true);
@@ -69,15 +66,7 @@ function Game() {
         className="max-w-[800px] mx-auto pt-5"
         style={isStarted ? { position: "relative" } : {}}
       >
-        <header className="flex justify-end h-9 gap-x-4">
-          <Button onClick={() => navigate("/game")} variant={"secondary"}>
-            Start Game
-          </Button>
-          <Separator orientation="vertical" />
-          <Button onClick={() => navigate("/auth")} variant={"outline"}>
-            Log in
-          </Button>
-        </header>
+        <Header />
         <main className="mt-10">
           <h1 className="text-center text-4xl font-medium">Memoristmas 🎄</h1>
           <p className="text-center max-w-[450px] mx-auto mt-2">
