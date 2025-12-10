@@ -98,8 +98,9 @@ export const useUser = () => {
     );
 
     if (!response.ok) {
+      const data = await response.json();
       setUser(null);
-      setErrorMessage("Registration failed");
+      setErrorMessage(data.message || "Registration failed");
       return false;
     }
 
