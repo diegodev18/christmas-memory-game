@@ -75,7 +75,7 @@ function Game() {
           </p>
         </main>
       </div>
-      <div className="flex justify-center flex-wrap max-w-[800px] mx-auto pt-5">
+      <div className="flex justify-center flex-wrap max-w-[1200px] mx-auto pt-5">
         {fullCards.map((card, idx) => (
           <Card
             key={idx}
