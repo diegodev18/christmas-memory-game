@@ -3,54 +3,20 @@ import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { toast } from "sonner";
 import Card from "@/components/Card";
-import { useCollection } from "@/hooks/collection";
 import { useNavigate } from "react-router-dom";
+import { exampleCards as cards } from "@/consts/cards";
 
 function Home() {
   const [clickedCards, setClickedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
-  const [bgCards] = useState<string[]>([
-    "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg",
-    "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg",
-    "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg",
-  ]);
-  const [cards] = useState<
-    { id: number; name: string; image: string; color: string }[]
-  >([
-    {
-      id: 1,
-      name: "Reno",
-      image:
-        "https://as2.ftcdn.net/v2/jpg/05/44/16/87/1000_F_544168719_oLnqNZxl4ppagM0ztzWl5MMSWGBzIoMN.jpg",
-      color: "red",
-    },
-    {
-      id: 2,
-      name: "Reno 1",
-      image:
-        "https://as1.ftcdn.net/v2/jpg/05/44/16/86/1000_F_544168674_kAfWk6ZsfLqVKp0PLAP7q5h4aaGQVYV9.jpg",
-      color: "red",
-    },
-    {
-      id: 3,
-      name: "Reno 2",
-      image:
-        "https://as2.ftcdn.net/v2/jpg/05/44/16/87/1000_F_544168736_bF0ttcz1cBUmNlthVZZ6luL12ZBzPT9T.jpg",
-      color: "red",
-    },
-  ]);
-  const [shuffledCards] = useState<typeof cards>(() =>
-    [...cards, ...cards].sort(() => Math.random() - 0.5)
-  );
-  const [randomBgCard] = useState(
-    () => bgCards[Math.floor(Math.random() * bgCards.length)]
-  );
+  const [shuffledCards] = useState(() => {
+    return [...cards, ...cards].sort(() => Math.random() - 0.5);
+  });
   const [isStarted, setIsStarted] = useState(false);
   const [collections, setCollections] = useState<number[]>([]);
-  const { collection } = useCollection();
   const navigate = useNavigate();
-
-  console.log("User collection from hook:", collection);
+  const bgCard =
+    "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg";
 
   const handleCardClick = (idx: number) => {
     if (!isStarted) setIsStarted(true);
@@ -129,7 +95,7 @@ function Home() {
             isFlipped={clickedCards.includes(idx)}
             isMatched={matchedCards.includes(idx)}
             isStarted={isStarted}
-            backImage={randomBgCard}
+            backImage={bgCard}
             onClick={handleCardClick}
           />
         ))}
