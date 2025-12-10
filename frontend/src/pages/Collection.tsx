@@ -50,6 +50,9 @@ function Collection() {
           </Tooltip>
         ))}
       </div>
+      <Button variant={"outline"} className="mt-10 mx-auto block">
+        Take a Screenshot to Share!
+      </Button>
     </>
   );
 }
