@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { toast } from "sonner";
-import Card from "@/components/Card";
 import { useCollection } from "@/hooks/collection";
 import { useNavigate } from "react-router-dom";
-import { useGame } from "@/hooks/game";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 function Collection() {
   const { collection } = useCollection();
@@ -23,23 +25,29 @@ function Collection() {
           </Button>
         </header>
         <main className="mt-10">
-          <h1 className="text-center text-4xl font-medium">Memoristmas 🎄</h1>
+          <h1 className="text-center text-4xl font-medium">Collection 🎄</h1>
           <p className="text-center max-w-[450px] mx-auto mt-2">
-            Find all the matching pairs of Christmas-themed cards to win the
-            game!
+            Here is your collection of festive cards!
           </p>
         </main>
       </div>
-      <div className="flex gap-2 justify-center flex-wrap max-w-[800px] mx-auto pt-5">
+      <div className="flex gap-4 justify-center flex-wrap max-w-[800px] mx-auto pt-5">
         {collection.map((card, idx) => (
-          <img
-            className={`size-16 object-center object-cover rounded-lg ${
-              idx % 2 === 0 ? "rotate-6" : "-rotate-6"
-            }`}
-            key={idx}
-            src={card.image_url}
-            alt={card.name}
-          />
+          <Tooltip>
+            <TooltipTrigger>
+              <img
+                className={`size-20 object-center object-cover rounded-lg ring ring-neutral-800 hover:scale-125 transition ease-in-out duration-200 hover:rotate-0 ${
+                  idx % 2 === 0 ? "rotate-6" : "-rotate-6"
+                }`}
+                key={idx}
+                src={card.image_url}
+                alt={card.name}
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{card.name.toUpperCase()}</p>
+            </TooltipContent>
+          </Tooltip>
         ))}
       </div>
     </>
