@@ -4,6 +4,38 @@ import Card from "@/components/Card";
 import { useCollection } from "@/hooks/collection";
 import { useGame } from "@/hooks/game";
 import Header from "@/components/Header";
+import { useNavigate } from "react-router-dom";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+function SelectLevel() {
+  const navigate = useNavigate();
+  return (
+    <div className="block mx-auto w-fit mt-4">
+      <Select
+        onValueChange={(val) => {
+          const url = new URL(window.location.href);
+          url.searchParams.set("level", val);
+          navigate(url.pathname + url.search);
+        }}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Level" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="easy">Easy</SelectItem>
+          <SelectItem value="medium">Medium</SelectItem>
+          <SelectItem value="hard">Hard</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
 
 function Game() {
   const { cards } = useGame(10);
@@ -75,6 +107,7 @@ function Game() {
           </p>
         </main>
       </div>
+      <SelectLevel />
       <div className="flex justify-center flex-wrap max-w-[1200px] mx-auto pt-5">
         {fullCards.map((card, idx) => (
           <Card
