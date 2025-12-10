@@ -15,7 +15,7 @@ export default function Header() {
       </Button>
       <Separator orientation="vertical" />
       <Button onClick={() => navigate("/auth")} variant={"outline"}>
-        Log in
+        Auth
       </Button>
     </header>
   );
