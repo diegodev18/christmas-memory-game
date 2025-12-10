@@ -1,10 +1,7 @@
+import type { GameCard } from "@/types";
+
 interface CardProps {
-  card: {
-    id: number;
-    name: string;
-    image: string;
-    color: string;
-  };
+  card: GameCard;
   idx: number;
   isFlipped: boolean;
   isMatched: boolean;
@@ -65,8 +62,8 @@ export default function Card({
           }}
         >
           <img
-            src={card.image}
-            alt={card.name}
+            src={card.image_url}
+            alt={card.name.toUpperCase()}
             className="w-full h-full object-cover object-center"
           />
         </div>

@@ -24,7 +24,11 @@ export const getCollectionItems = async (
 
   return res.status(200).json({
     items: collectionItems.map((item) => ({
-      card: item.cards,
+      card: {
+        id: item.cards.id,
+        image_url: item.cards.url,
+        name: item.cards.name,
+      },
       id: item.id,
     })),
   });

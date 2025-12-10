@@ -1,18 +1,5 @@
 import { useState, useEffect } from "react";
-
-interface GameCard {
-  id: number;
-}
-
-interface CardData {
-  id: number;
-  image_url: string;
-  name: string;
-}
-
-interface GameResponse {
-  data: GameCard[];
-}
+import type { GameResponse, GameCard } from "@/types";
 
 export const useGame = (cardsLimit: number) => {
   const [cards, setCards] = useState<GameCard[]>([]);
@@ -53,7 +40,7 @@ export const useGame = (cardsLimit: number) => {
     if (!response.ok) {
       return {} as GameCard;
     }
-    const data = (await response.json()) as { data: CardData };
+    const data = (await response.json()) as { data: GameCard };
     return data.data;
   };
 

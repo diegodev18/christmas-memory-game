@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
+import type { GameCard } from "@/types";
 
 export const useCollection = () => {
-  const [collection, setCollection] = useState<
-    { id: number; name: string; url: string }[]
-  >([]);
+  const [collection, setCollection] = useState<GameCard[]>([]);
 
   const fetchCollection = async () => {
     const response = await fetch(
@@ -24,18 +23,16 @@ export const useCollection = () => {
     }
 
     const data = await response.json();
-    const items = data.items.map(
-      (item: { card: { id: number; name: string; url: string } }) => ({
-        id: item.card.id,
-        name: item.card.name,
-        url: item.card.url,
-      })
-    );
+    const items = data.items.map((item: { card: GameCard }) => ({
+      id: item.card.id,
+      name: item.card.name,
+      image_url: item.card.image_url,
+    }));
 
     setCollection(items);
   };
 
-  const addCollectionItem = async (itemId: number) => {
+  const addCollectionItem = async (cardId: number) => {
     const response = await fetch(
       import.meta.env.VITE_API_URL + "/collection/new",
       {
@@ -44,7 +41,7 @@ export const useCollection = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ itemId }),
+        body: JSON.stringify({ cardId }),
       }
     );
 
