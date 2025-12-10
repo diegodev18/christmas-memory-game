@@ -33,13 +33,12 @@ function Collection() {
       </div>
       <div className="flex gap-4 justify-center flex-wrap max-w-[800px] mx-auto pt-5">
         {collection.map((card, idx) => (
-          <Tooltip>
+          <Tooltip key={card.id}>
             <TooltipTrigger>
               <img
                 className={`size-20 object-center object-cover rounded-lg ring ring-neutral-800 hover:scale-125 transition ease-in-out duration-200 hover:rotate-0 ${
                   idx % 2 === 0 ? "rotate-6" : "-rotate-6"
                 }`}
-                key={idx}
                 src={card.image_url}
                 alt={card.name}
               />
