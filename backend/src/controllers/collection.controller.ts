@@ -71,6 +71,7 @@ export const newCollectionItem = async (req: SessionRequest, res: Response) => {
   });
 
   return res.status(201).json({
+    item: cardFound,
     message: "New collection item created successfully",
   });
 };

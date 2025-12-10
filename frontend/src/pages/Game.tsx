@@ -9,11 +9,6 @@ import { useNavigate } from "react-router-dom";
 function Game() {
   const [clickedCards, setClickedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
-  const [bgCards] = useState<string[]>([
-    "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg",
-    "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg",
-    "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg",
-  ]);
   const [cards] = useState<
     { id: number; name: string; image: string; color: string }[]
   >([
@@ -42,12 +37,11 @@ function Game() {
   const [shuffledCards] = useState<typeof cards>(() =>
     [...cards, ...cards].sort(() => Math.random() - 0.5)
   );
-  const [randomBgCard] = useState(
-    () => bgCards[Math.floor(Math.random() * bgCards.length)]
-  );
   const [isStarted, setIsStarted] = useState(false);
   const [collections, setCollections] = useState<number[]>([]);
   const { collection } = useCollection();
+  const bgCard =
+    "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg";
   const navigate = useNavigate();
 
   console.log("User collection from hook:", collection);
@@ -129,7 +123,7 @@ function Game() {
             isFlipped={clickedCards.includes(idx)}
             isMatched={matchedCards.includes(idx)}
             isStarted={isStarted}
-            backImage={randomBgCard}
+            backImage={bgCard}
             onClick={handleCardClick}
           />
         ))}
