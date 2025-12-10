@@ -21,6 +21,8 @@ export const getRandomCards = async (req: Request, res: Response) => {
     .slice(0, limit)
     .map((card) => ({
       id: card.id,
+      image_url: card.url,
+      name: card.name,
     }));
 
   return res.status(200).json({
