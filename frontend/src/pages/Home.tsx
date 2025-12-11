@@ -2,7 +2,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Card from "@/components/Card";
 import Header from "@/components/Header";
+import { Button } from "@/components/ui/button";
 import { exampleCards as cards } from "@/consts/cards";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [clickedCards, setClickedCards] = useState<number[]>([]);
@@ -14,6 +16,7 @@ function Home() {
   const [collections, setCollections] = useState<number[]>([]);
   const bgCard =
     "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg";
+  const navigate = useNavigate();
 
   const handleCardClick = (idx: number) => {
     if (!isStarted) setIsStarted(true);
@@ -89,6 +92,15 @@ function Home() {
           />
         ))}
       </div>
+      <Button
+        onClick={() => navigate("/game")}
+        variant={"outline"}
+        className={`mx-auto block ${
+          isStarted ? "mt-5" : "mt-[18.2rem]"
+        } transition duration-75`}
+      >
+        Start Game and Collect Cards!
+      </Button>
     </>
   );
 }
