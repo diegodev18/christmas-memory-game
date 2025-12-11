@@ -28,6 +28,7 @@ export const useScore = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ level, time, count }),
+        credentials: "include",
       }
     );
     const data = (await response.json()) as ScoreResponse;
