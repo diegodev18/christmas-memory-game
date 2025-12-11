@@ -7,6 +7,7 @@ import { getSessionMiddleware } from "@/middlewares/session.middleware";
 import authRouter from "@/routes/auth.route";
 import cardsRouter from "@/routes/cards.route";
 import collectionRouter from "@/routes/collection.route";
+import scoreRouter from "@/routes/score.route";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(getSessionMiddleware);
 app.use("/api/cards", cardsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/collection", collectionRouter);
+app.use("/api/score", scoreRouter);
 
 app.listen(PORT_NUMBER, () => {
   console.log(`Server is running on port ${PORT_NUMBER.toString()}`);
