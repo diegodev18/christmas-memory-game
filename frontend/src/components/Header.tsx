@@ -7,6 +7,9 @@ export default function Header() {
 
   return (
     <header className="flex justify-end h-9 gap-x-4">
+      <Button onClick={() => navigate("/scoreboard")} variant={"secondary"}>
+        Scoreboard
+      </Button>
       <Button onClick={() => navigate("/collection")} variant={"secondary"}>
         Collection
       </Button>

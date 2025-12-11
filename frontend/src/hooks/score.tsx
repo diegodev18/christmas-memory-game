@@ -1,22 +1,22 @@
-import type { ScoreResponse } from "@/types";
+import type { ScoreResponse, ScoreboardResponse } from "@/types";
 import { useState } from "react";
 
 export const useScore = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [scoreboard, setScoreboard] = useState<ScoreResponse["data"]>([]);
+  const [scoreboard, setScoreboard] = useState<ScoreboardResponse["data"]>([]);
 
   const fetchScoreboard = async () => {
     const response = await fetch(
       import.meta.env.VITE_API_URL + "/score/top/10"
     );
-    const data = (await response.json()) as ScoreResponse;
+    const data = (await response.json()) as ScoreboardResponse;
 
     if (!response.ok) {
       setErrorMessage(data.message || "Failed to fetch scoreboard");
       setScoreboard([]);
     }
 
-    setScoreboard(data.data);
+    setScoreboard(data.data || []);
   };
 
   const submitScore = async (level: string, time: number, count: number) => {

@@ -12,7 +12,7 @@ export const ScoreQuerySchema = z.object({
   limit: z
     .string()
     .optional()
-    .transform((val) => (val ? parseInt(val, 10) : 10))
+    .transform((val) => (val ? Number(val) : 10))
     .refine((val) => !isNaN(val) && val > 0, {
       message: "Limit must be a positive integer",
     }),

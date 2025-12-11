@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Game from "./pages/Game";
 import Collection from "./pages/Collection";
+import Scoreboard from "./pages/Scoreboard";
 import Background from "./components/Background";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/collection" element={<Collection />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/game" element={<Game />} />
+          <Route path="/scoreboard" element={<Scoreboard />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Home />} />
         </Routes>

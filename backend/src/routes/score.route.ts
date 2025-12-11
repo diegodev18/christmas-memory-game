@@ -4,7 +4,7 @@ import { getTopScores, submitScore } from "@/controllers/score.controller";
 
 const router = Router();
 
-router.get("/top", getTopScores);
+router.get("/top/:limit", getTopScores);
 router.post("/submit", submitScore);
 
 export default router;

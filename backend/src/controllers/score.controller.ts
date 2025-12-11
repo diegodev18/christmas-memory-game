@@ -2,6 +2,7 @@ import { Response } from "express";
 
 import type { SessionRequest } from "@/types";
 
+import { score_levels } from "@/generated/prisma/enums";
 import prisma from "@/lib/prisma";
 import { ScoreBodySchema, ScoreQuerySchema } from "@/schemas/score.schema";
 
@@ -38,15 +39,43 @@ export const submitScore = async (req: SessionRequest, res: Response) => {
 };
 
 export const getTopScores = async (req: SessionRequest, res: Response) => {
-  const parseResult = ScoreQuerySchema.safeParse(req.query.limit);
+  const parseResult = ScoreQuerySchema.safeParse(req.params);
   if (!parseResult.success) {
-    return res.status(400).json({ message: "Invalid limit parameter" });
+    return res.status(400).json({
+      message: "Invalid limit parameter: " + parseResult.error.message,
+    });
   }
 
-  const topScores = await prisma.score.findMany({
-    orderBy: [{ count: "desc" }, { time: "asc" }],
-    take: parseResult.data.limit,
-  });
+  const topScores = await Promise.all(
+    Object.values(score_levels).map(async (lvl) => {
+      const scores = await prisma.score.findMany({
+        orderBy: [{ count: "desc" }, { time: "asc" }],
+        take: parseResult.data.limit,
+        where: { level: lvl },
+      });
+      const scoresWithUser = (
+        await Promise.all(
+          scores.map(async (score) => {
+            const user = await prisma.users.findUnique({
+              where: { id: score.user_id },
+            });
+            if (!user) return null;
+            return {
+              ...score,
+              user: {
+                user_name: user.user_name,
+              },
+              user_id: undefined,
+            };
+          })
+        )
+      ).filter((s) => s !== null);
+      return {
+        level: lvl,
+        scores: scoresWithUser,
+      };
+    })
+  );
 
   return res.status(200).json({
     data: topScores,
