@@ -5,6 +5,7 @@ import { useCollection } from "@/hooks/collection";
 import { useGame } from "@/hooks/game";
 import Header from "@/components/Header";
 import { useScore } from "@/hooks/score";
+import type { GameCard } from "@/types";
 import {
   Select,
   SelectContent,
@@ -53,10 +54,21 @@ function Game() {
   const bgCard =
     "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg";
 
+  const [shuffledCards, setShuffledCards] = useState<GameCard[]>([]);
+
+  useEffect(() => {
+    setShuffledCards(
+      fullCards
+        .map((card) => ({ card, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ card }) => card)
+    );
+  }, [cards]);
+
   // Detectar cuando se completan todas las cartas
   useEffect(() => {
     if (
-      matchedCards.length === fullCards.length &&
+      matchedCards.length === shuffledCards.length &&
       matchedCards.length > 0 &&
       startTime &&
       !scoreSubmitted.current
@@ -71,7 +83,7 @@ function Game() {
     }
   }, [
     matchedCards,
-    fullCards.length,
+    shuffledCards.length,
     startTime,
     submitScore,
     level,
@@ -103,8 +115,8 @@ function Game() {
     if (newClickedCards.length === 2) {
       setMoveCount(moveCount + 1);
       const [firstIdx, secondIdx] = newClickedCards;
-      const firstCard = fullCards[firstIdx];
-      const secondCard = fullCards[secondIdx];
+      const firstCard = shuffledCards[firstIdx];
+      const secondCard = shuffledCards[secondIdx];
 
       // Si las cartas coinciden por ID
       if (firstCard.id === secondCard.id) {
@@ -144,7 +156,7 @@ function Game() {
       </div>
       <SelectLevel />
       <div className="flex justify-center flex-wrap max-w-[1200px] mx-auto pt-5">
-        {fullCards.map((card, idx) => (
+        {shuffledCards.map((card, idx) => (
           <Card
             key={idx}
             card={card}

@@ -45,7 +45,10 @@ export const useGame = (cardsLimit: number) => {
   };
 
   useEffect(() => {
-    fetchRandomCards();
+    const loadCards = async () => {
+      await fetchRandomCards();
+    };
+    void loadCards();
   }, []);
 
   return { cards, fetchRandomCards, getCardData };
