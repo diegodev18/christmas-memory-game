@@ -4,9 +4,8 @@ import Card from "@/components/Card";
 import { useCollection } from "@/hooks/collection";
 import { useGame } from "@/hooks/game";
 import Header from "@/components/Header";
-import { useNavigate } from "react-router-dom";
 import { useScore } from "@/hooks/score";
-import { useUser } from "@/hooks/user";
+import { useNavigate } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -41,9 +40,7 @@ function SelectLevel() {
 
 function Game() {
   const { submitScore } = useScore();
-  const { user } = useUser();
   const { cards } = useGame(10);
-  const navigate = useNavigate();
   const [clickedCards, setClickedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
   const [isStarted, setIsStarted] = useState(false);
@@ -81,10 +78,6 @@ function Game() {
     level,
     moveCount,
   ]);
-
-  if (!user) {
-    return navigate("/auth");
-  }
 
   const handleCardClick = (idx: number) => {
     if (!isStarted) {

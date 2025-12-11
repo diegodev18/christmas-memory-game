@@ -10,30 +10,36 @@ interface AuthResponse {
 
 export const useUser = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const fetchUser = async () => {
-    const response = await fetch(
-      import.meta.env.VITE_API_URL + "/auth/session",
-      {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    try {
+      setLoading(true);
+      const response = await fetch(
+        import.meta.env.VITE_API_URL + "/auth/session",
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        console.error("Failed to fetch user");
+        setUser(null);
+        return;
       }
-    );
-    if (!response.ok) {
-      console.error("Failed to fetch user");
-      setUser(null);
-      return;
-    }
 
-    const data = (await response.json()) as AuthResponse;
-    setUser({ user_name: data.user.user_name });
+      const data = (await response.json()) as AuthResponse;
+      setUser({ user_name: data.user.user_name });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const login = async () => {
@@ -109,7 +115,9 @@ export const useUser = () => {
     return true;
   };
 
-  useEffect(() => (() => void fetchUser())(), []);
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return {
     fetchUser,
@@ -117,6 +125,7 @@ export const useUser = () => {
     logout,
     register,
     user,
+    loading,
     setUsername,
     setPassword,
     setEmail,

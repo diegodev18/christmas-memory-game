@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { useCollection } from "@/hooks/collection";
-import { useUser } from "@/hooks/user";
-import { useNavigate } from "react-router-dom";
 import {
   Tooltip,
   TooltipContent,
@@ -11,12 +9,6 @@ import Header from "@/components/Header";
 
 function Collection() {
   const { collection } = useCollection();
-  const { user } = useUser();
-  const navigate = useNavigate();
-
-  if (!user) {
-    return navigate("/auth");
-  }
 
   return (
     <>

@@ -6,6 +6,7 @@ import Game from "./pages/Game";
 import Collection from "./pages/Collection";
 import Scoreboard from "./pages/Scoreboard";
 import Background from "./components/Background";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { Toaster } from "@/components/ui/sonner";
 
 function App() {
@@ -15,9 +16,23 @@ function App() {
       <Toaster position="top-right" />
       <BrowserRouter>
         <Routes>
-          <Route path="/collection" element={<Collection />} />
+          <Route
+            path="/collection"
+            element={
+              <ProtectedRoute>
+                <Collection />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/game" element={<Game />} />
+          <Route
+            path="/game"
+            element={
+              <ProtectedRoute>
+                <Game />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/scoreboard" element={<Scoreboard />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Home />} />
