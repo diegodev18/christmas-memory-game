@@ -165,6 +165,11 @@ function Game() {
           />
         ))}
       </div>
+      {!isStarted && (
+        <p className="fixed bottom-10 left-20 font-semibold animate-pulse">
+          Click a card to start the game!
+        </p>
+      )}
     </>
   );
 }
