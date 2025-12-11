@@ -118,11 +118,11 @@ export const register = async (req: SessionRequest, res: Response) => {
 
     if (prismaError.code === "P2002") {
       return res.status(400).json({
-        message: "Company already registered with given RFC or username",
+        message: "User already exists with the provided email or username",
       });
     }
 
-    console.error("Error during company registration:", err);
+    console.error("Error during user registration:", err);
     return res.status(500).json({ message: "Internal server error" });
   }
 

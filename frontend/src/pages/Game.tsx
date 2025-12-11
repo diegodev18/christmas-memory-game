@@ -135,7 +135,7 @@ function Game() {
       >
         <Header />
         <main className="mt-10">
-          <h1 className="text-center text-4xl font-medium">Memoristmas 🎄</h1>
+          <h1 className="text-center text-4xl font-medium">Snowflip 🎄</h1>
           <p className="text-center max-w-[450px] mx-auto mt-2">
             Find all the matching pairs of Christmas-themed cards to win the
             game!
