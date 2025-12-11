@@ -5,7 +5,6 @@ import { useCollection } from "@/hooks/collection";
 import { useGame } from "@/hooks/game";
 import Header from "@/components/Header";
 import { useScore } from "@/hooks/score";
-import { useNavigate } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -15,14 +14,13 @@ import {
 } from "@/components/ui/select";
 
 function SelectLevel() {
-  const navigate = useNavigate();
   return (
     <div className="block mx-auto w-fit mt-4">
       <Select
         onValueChange={(val) => {
           const url = new URL(window.location.href);
           url.searchParams.set("level", val);
-          navigate(url.pathname + url.search);
+          window.location.href = url.pathname + url.search;
         }}
       >
         <SelectTrigger className="w-[180px]">
@@ -40,7 +38,10 @@ function SelectLevel() {
 
 function Game() {
   const { submitScore } = useScore();
-  const { cards } = useGame(10);
+  const level =
+    new URLSearchParams(window.location.search).get("level") || "easy";
+  const cardLimit = level === "easy" ? 8 : level === "medium" ? 12 : 18;
+  const { cards } = useGame(cardLimit);
   const [clickedCards, setClickedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
   const [isStarted, setIsStarted] = useState(false);
@@ -49,8 +50,6 @@ function Game() {
   const scoreSubmitted = useRef(false);
   const fullCards = [...cards, ...cards];
   const { collection, addCollectionItem } = useCollection();
-  const level =
-    new URLSearchParams(window.location.search).get("level") || "easy";
   const bgCard =
     "https://i.pinimg.com/1200x/54/ac/58/54ac5887bccf43c438839122586ea1ac.jpg";
 
