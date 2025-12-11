@@ -41,6 +41,6 @@ export const CORS_OPTIONS: CorsOptions | CorsOptionsDelegate | undefined = {
   optionsSuccessStatus: 200,
   origin:
     NODE_ENV === "production"
-      ? "https://vods-to-cloud.strealr.live"
+      ? `https://${ORIGIN_DOMAIN}`
       : "http://localhost:5173",
 };
